@@ -1,5 +1,7 @@
 from __future__ import print_function
+
 LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
 
 def main():
     message = input('Enter message: ')
@@ -16,6 +18,7 @@ def main():
     print('\n%sed message:' % mode.title())
     print(translated)
 
+
 def encryptMessage(key, message):
     '''
     >>> encryptMessage('HDarji', 'This is Harshil Darji from Dharmaj.')
@@ -23,12 +26,14 @@ def encryptMessage(key, message):
     '''
     return translateMessage(key, message, 'encrypt')
 
+
 def decryptMessage(key, message):
     '''
     >>> decryptMessage('HDarji', 'Akij ra Odrjqqs Gaisq muod Mphumrs.')
     'This is Harshil Darji from Dharmaj.'
     '''
     return translateMessage(key, message, 'decrypt')
+
 
 def translateMessage(key, message, mode):
     translated = []
@@ -56,6 +61,7 @@ def translateMessage(key, message, mode):
         else:
             translated.append(symbol)
     return ''.join(translated)
+
 
 if __name__ == '__main__':
     main()

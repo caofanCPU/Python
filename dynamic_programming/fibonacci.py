@@ -30,7 +30,7 @@ class Fibonacci:
 if __name__ == '__main__':
     print("\n********* Fibonacci Series Using Dynamic Programming ************\n")
     try:
-        raw_input          # Python 2
+        raw_input  # Python 2
     except NameError:
         raw_input = input  # Python 3
 

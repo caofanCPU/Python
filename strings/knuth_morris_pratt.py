@@ -46,7 +46,7 @@ def get_failure_array(pattern):
         if pattern[i] == pattern[j]:
             i += 1
         elif i > 0:
-            i = failure[i-1]
+            i = failure[i - 1]
             continue
         j += 1
         failure.append(i)

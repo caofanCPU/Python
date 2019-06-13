@@ -43,9 +43,10 @@ def shell_sort(collection):
 
     return collection
 
+
 if __name__ == '__main__':
     try:
-        raw_input          # Python 2
+        raw_input  # Python 2
     except NameError:
         raw_input = input  # Python 3
 

@@ -9,7 +9,6 @@ from __future__ import print_function
 
 
 def dp_count(S, m, n):
-
     # table[i] represents the number of ways to get to amount i
     table = [0] * (n + 1)
 

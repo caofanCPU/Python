@@ -1,14 +1,14 @@
-import string
 import itertools
+import string
+
 
 def chunker(seq, size):
     it = iter(seq)
     while True:
-       chunk = tuple(itertools.islice(it, size))
-       if not chunk:
-           return
-       yield chunk
-
+        chunk = tuple(itertools.islice(it, size))
+        if not chunk:
+            return
+        yield chunk
 
 
 def prepare_input(dirty):
@@ -16,19 +16,19 @@ def prepare_input(dirty):
     Prepare the plaintext by up-casing it
     and separating repeated letters with X's
     """
-    
+
     dirty = ''.join([c.upper() for c in dirty if c in string.ascii_letters])
     clean = ""
-    
+
     if len(dirty) < 2:
         return dirty
 
-    for i in range(len(dirty)-1):
+    for i in range(len(dirty) - 1):
         clean += dirty[i]
-        
-        if dirty[i] == dirty[i+1]:
+
+        if dirty[i] == dirty[i + 1]:
             clean += 'X'
-    
+
     clean += dirty[-1]
 
     if len(clean) & 1:
@@ -36,8 +36,8 @@ def prepare_input(dirty):
 
     return clean
 
-def generate_table(key):
 
+def generate_table(key):
     # I and J are used interchangeably to allow
     # us to use a 5x5 table (25 letters)
     alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"
@@ -57,6 +57,7 @@ def generate_table(key):
 
     return table
 
+
 def encode(plaintext, key):
     table = generate_table(key)
     plaintext = prepare_input(plaintext)
@@ -68,14 +69,14 @@ def encode(plaintext, key):
         row2, col2 = divmod(table.index(char2), 5)
 
         if row1 == row2:
-            ciphertext += table[row1*5+(col1+1)%5]
-            ciphertext += table[row2*5+(col2+1)%5]
+            ciphertext += table[row1 * 5 + (col1 + 1) % 5]
+            ciphertext += table[row2 * 5 + (col2 + 1) % 5]
         elif col1 == col2:
-            ciphertext += table[((row1+1)%5)*5+col1]
-            ciphertext += table[((row2+1)%5)*5+col2]
-        else: # rectangle
-            ciphertext += table[row1*5+col2]
-            ciphertext += table[row2*5+col1]
+            ciphertext += table[((row1 + 1) % 5) * 5 + col1]
+            ciphertext += table[((row2 + 1) % 5) * 5 + col2]
+        else:  # rectangle
+            ciphertext += table[row1 * 5 + col2]
+            ciphertext += table[row2 * 5 + col1]
 
     return ciphertext
 
@@ -90,13 +91,13 @@ def decode(ciphertext, key):
         row2, col2 = divmod(table.index(char2), 5)
 
         if row1 == row2:
-            plaintext += table[row1*5+(col1-1)%5]
-            plaintext += table[row2*5+(col2-1)%5]
+            plaintext += table[row1 * 5 + (col1 - 1) % 5]
+            plaintext += table[row2 * 5 + (col2 - 1) % 5]
         elif col1 == col2:
-            plaintext += table[((row1-1)%5)*5+col1]
-            plaintext += table[((row2-1)%5)*5+col2]
-        else: # rectangle
-            plaintext += table[row1*5+col2]
-            plaintext += table[row2*5+col1]
+            plaintext += table[((row1 - 1) % 5) * 5 + col1]
+            plaintext += table[((row2 - 1) % 5) * 5 + col2]
+        else:  # rectangle
+            plaintext += table[row1 * 5 + col2]
+            plaintext += table[row2 * 5 + col1]
 
     return plaintext

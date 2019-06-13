@@ -1,5 +1,6 @@
-from __future__ import print_function
 from __future__ import absolute_import
+from __future__ import print_function
+
 import string
 
 from .Stack import Stack
@@ -38,7 +39,7 @@ def infix_to_postfix(expression):
             postfix.append(char)
         elif char not in {'(', ')'}:
             while (not stack.is_empty()
-                    and precedence(char) <= precedence(stack.peek())):
+                   and precedence(char) <= precedence(stack.peek())):
                 postfix.append(stack.pop())
             stack.push(char)
         elif char == '(':

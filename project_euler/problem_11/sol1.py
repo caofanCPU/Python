@@ -1,4 +1,5 @@
 from __future__ import print_function
+
 '''
 What is the greatest product of four adjacent numbers (horizontally, vertically, or diagonally) in this 20x20 array?
 
@@ -25,44 +26,46 @@ What is the greatest product of four adjacent numbers (horizontally, vertically,
 '''
 
 try:
-	xrange			#Python 2
+    xrange  # Python 2
 except NameError:
-	xrange = range	#Python 2
+    xrange = range  # Python 2
+
 
 def largest_product(grid):
-	nColumns = len(grid[0])
-	nRows = len(grid)
+    nColumns = len(grid[0])
+    nRows = len(grid)
 
-	largest = 0
-	lrDiagProduct = 0
-	rlDiagProduct = 0
+    largest = 0
+    lrDiagProduct = 0
+    rlDiagProduct = 0
 
-	#Check vertically, horizontally, diagonally at the same time (only works for nxn grid)
-	for i in xrange(nColumns):
-		for j in xrange(nRows-3):
-			vertProduct = grid[j][i]*grid[j+1][i]*grid[j+2][i]*grid[j+3][i]
-			horzProduct = grid[i][j]*grid[i][j+1]*grid[i][j+2]*grid[i][j+3]
+    # Check vertically, horizontally, diagonally at the same time (only works for nxn grid)
+    for i in xrange(nColumns):
+        for j in xrange(nRows - 3):
+            vertProduct = grid[j][i] * grid[j + 1][i] * grid[j + 2][i] * grid[j + 3][i]
+            horzProduct = grid[i][j] * grid[i][j + 1] * grid[i][j + 2] * grid[i][j + 3]
 
-			#Left-to-right diagonal (\) product
-			if (i < nColumns-3):
-				lrDiagProduct = grid[i][j]*grid[i+1][j+1]*grid[i+2][j+2]*grid[i+3][j+3]
+            # Left-to-right diagonal (\) product
+            if (i < nColumns - 3):
+                lrDiagProduct = grid[i][j] * grid[i + 1][j + 1] * grid[i + 2][j + 2] * grid[i + 3][j + 3]
 
-			#Right-to-left diagonal(/) product
-			if (i > 2):
-				rlDiagProduct = grid[i][j]*grid[i-1][j+1]*grid[i-2][j+2]*grid[i-3][j+3]
+            # Right-to-left diagonal(/) product
+            if (i > 2):
+                rlDiagProduct = grid[i][j] * grid[i - 1][j + 1] * grid[i - 2][j + 2] * grid[i - 3][j + 3]
 
-			maxProduct = max(vertProduct, horzProduct, lrDiagProduct, rlDiagProduct)
-			if maxProduct > largest:
-				largest = maxProduct
+            maxProduct = max(vertProduct, horzProduct, lrDiagProduct, rlDiagProduct)
+            if maxProduct > largest:
+                largest = maxProduct
 
-	return largest
+    return largest
+
 
 if __name__ == '__main__':
-	grid = []
-	with open('grid.txt') as file:
-		for line in file:
-			grid.append(line.strip('\n').split(' '))
+    grid = []
+    with open('grid.txt') as file:
+        for line in file:
+            grid.append(line.strip('\n').split(' '))
 
-	grid = [[int(i) for i in grid[j]] for j in xrange(len(grid))]
+    grid = [[int(i) for i in grid[j]] for j in xrange(len(grid))]
 
-	print(largest_product(grid))
+    print(largest_product(grid))

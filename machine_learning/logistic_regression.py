@@ -12,12 +12,12 @@
 ''' Implementing logistic regression for classification problem 
      Helpful resources : 1.Coursera ML course    2.https://medium.com/@martinpella/logistic-regression-from-scratch-in-python-124c5636b8ac'''
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import datasets
+
 
 # get_ipython().run_line_magic('matplotlib', 'inline')
-
-from sklearn import datasets
 
 
 # In[67]:
@@ -35,11 +35,11 @@ def cost_function(h, y):
 # here alpha is the learning rate, X is the feature matrix,y is the target matrix
 
 def logistic_reg(
-    alpha,
-    X,
-    y,
-    max_iterations=70000,
-    ):
+        alpha,
+        X,
+        y,
+        max_iterations=70000,
+):
     converged = False
     iterations = 0
     theta = np.zeros(X.shape[1])
@@ -57,8 +57,8 @@ def logistic_reg(
         iterations += 1  # update iterations
 
         if iterations == max_iterations:
-            print ('Maximum iterations exceeded!')
-            print ('Minimal cost function J=', J)
+            print('Maximum iterations exceeded!')
+            print('Minimal cost function J=', J)
             converged = True
 
     return theta
@@ -73,7 +73,7 @@ if __name__ == '__main__':
 
     alpha = 0.1
     theta = logistic_reg(alpha, X, y, max_iterations=70000)
-    print (theta)
+    print(theta)
 
 
     def predict_prob(X):
@@ -96,6 +96,6 @@ if __name__ == '__main__':
         [0.5],
         linewidths=1,
         colors='black',
-        )
+    )
 
     plt.legend()

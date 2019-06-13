@@ -9,8 +9,8 @@ Rating). We try to best fit a line through dataset and estimate the parameters.
 """
 from __future__ import print_function
 
-import requests
 import numpy as np
+import requests
 
 
 def collect_dataset():

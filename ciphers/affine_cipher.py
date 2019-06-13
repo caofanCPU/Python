@@ -1,7 +1,11 @@
 from __future__ import print_function
-import sys, random, cryptomath_module as cryptoMath
+
+import cryptomath_module as cryptoMath
+import random
+import sys
 
 SYMBOLS = r""" !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"""
+
 
 def main():
     message = input('Enter message: ')
@@ -9,17 +13,19 @@ def main():
     mode = input('Encrypt/Decrypt [E/D]: ')
 
     if mode.lower().startswith('e'):
-              mode = 'encrypt'
-              translated = encryptMessage(key, message)
+        mode = 'encrypt'
+        translated = encryptMessage(key, message)
     elif mode.lower().startswith('d'):
-              mode = 'decrypt'
-              translated = decryptMessage(key, message)
+        mode = 'decrypt'
+        translated = decryptMessage(key, message)
     print('\n%sed text: \n%s' % (mode.title(), translated))
+
 
 def getKeyParts(key):
     keyA = key // len(SYMBOLS)
     keyB = key % len(SYMBOLS)
     return (keyA, keyB)
+
 
 def checkKeys(keyA, keyB, mode):
     if keyA == 1 and mode == 'encrypt':
@@ -30,6 +36,7 @@ def checkKeys(keyA, keyB, mode):
         sys.exit('Key A must be greater than 0 and key B must be between 0 and %s.' % (len(SYMBOLS) - 1))
     if cryptoMath.gcd(keyA, len(SYMBOLS)) != 1:
         sys.exit('Key A %s and the symbol set size %s are not relatively prime. Choose a different key.' % (keyA, len(SYMBOLS)))
+
 
 def encryptMessage(key, message):
     '''
@@ -46,6 +53,7 @@ def encryptMessage(key, message):
         else:
             cipherText += symbol
     return cipherText
+
 
 def decryptMessage(key, message):
     '''
@@ -64,6 +72,7 @@ def decryptMessage(key, message):
             plainText += symbol
     return plainText
 
+
 def getRandomKey():
     while True:
         keyA = random.randint(2, len(SYMBOLS))
@@ -71,7 +80,9 @@ def getRandomKey():
         if cryptoMath.gcd(keyA, len(SYMBOLS)) == 1:
             return keyA * len(SYMBOLS) + keyB
 
+
 if __name__ == '__main__':
     import doctest
+
     doctest.testmod()
     main()

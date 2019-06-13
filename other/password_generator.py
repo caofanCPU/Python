@@ -1,6 +1,7 @@
 from __future__ import print_function
-import string
+
 import random
+import string
 
 letters = [letter for letter in string.ascii_letters]
 digits = [digit for digit in string.digits]
@@ -19,17 +20,17 @@ print('[ If you are thinking of using this passsword, You better save it. ]')
 # ctbi= characters that must be in password
 # i= how many letters or characters the password length will be 
 def password_generator(ctbi, i):
-  # Password generator = full boot with random_number, random_letters, and random_character FUNCTIONS
-  pass  # Put your code here...
+    # Password generator = full boot with random_number, random_letters, and random_character FUNCTIONS
+    pass  # Put your code here...
 
 
 def random_number(ctbi, i):
-  pass  # Put your code here...
+    pass  # Put your code here...
 
 
 def random_letters(ctbi, i):
-  pass  # Put your code here...
+    pass  # Put your code here...
 
 
 def random_characters(ctbi, i):
-  pass  # Put your code here...
+    pass  # Put your code here...

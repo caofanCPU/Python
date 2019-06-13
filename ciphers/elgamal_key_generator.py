@@ -1,7 +1,9 @@
 import os
 import random
 import sys
-import rabin_miller as rabinMiller, cryptomath_module as cryptoMath
+
+import cryptomath_module as cryptoMath
+import rabin_miller as rabinMiller
 
 min_primitive_root = 3
 
@@ -19,7 +21,7 @@ def main():
 def primitiveRoot(p_val):
     print("Generating primitive root of p")
     while True:
-        g = random.randrange(3,p_val)
+        g = random.randrange(3, p_val)
         if pow(g, 2, p_val) == 1:
             continue
         if pow(g, p_val, p_val) == 1:
@@ -60,4 +62,3 @@ def makeKeyFiles(name, keySize):
 
 if __name__ == '__main__':
     main()
-    

@@ -1,5 +1,6 @@
 from .hash_table import HashTable
 
+
 class QuadraticProbing(HashTable):
 
     def __init__(self):

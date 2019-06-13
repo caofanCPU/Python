@@ -12,6 +12,7 @@ For manual testing run:
 python comb_sort.py
 """
 
+
 def comb_sort(data):
     """Pure implementation of comb sort algorithm in Python
     :param collection: some mutable ordered collection with heterogeneous
@@ -38,9 +39,9 @@ def comb_sort(data):
         i = 0
 
         while gap + i < len(data):
-            if data[i] > data[i+gap]:
+            if data[i] > data[i + gap]:
                 # Swap values
-                data[i], data[i+gap] = data[i+gap], data[i]
+                data[i], data[i + gap] = data[i + gap], data[i]
                 swapped = True
             i += 1
 
@@ -49,7 +50,7 @@ def comb_sort(data):
 
 if __name__ == '__main__':
     try:
-        raw_input          # Python 2
+        raw_input  # Python 2
     except NameError:
         raw_input = input  # Python 3
 

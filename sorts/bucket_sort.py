@@ -13,7 +13,8 @@
 #  Time Complexity of Solution:
 #  Best Case O(n); Average Case O(n); Worst Case O(n)
 
-DEFAULT_BUCKET_SIZE=5
+DEFAULT_BUCKET_SIZE = 5
+
 
 def bucket_sort(my_list, bucket_size=DEFAULT_BUCKET_SIZE):
     if len(my_list) == 0:
@@ -27,7 +28,8 @@ def bucket_sort(my_list, bucket_size=DEFAULT_BUCKET_SIZE):
         buckets[int((my_list[i] - min_value) // bucket_size)].append(my_list[i])
 
     return sorted([buckets[i][j] for i in range(len(buckets))
-                                 for j in range(len(buckets[i]))])
+                   for j in range(len(buckets[i]))])
+
 
 if __name__ == "__main__":
     user_input = input('Enter numbers separated by a comma:').strip()

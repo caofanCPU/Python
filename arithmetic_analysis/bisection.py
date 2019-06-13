@@ -15,7 +15,7 @@ def bisection(function, a, b):  # finds where the function becomes 0 in [a,b] us
         return
     else:
         mid = (start + end) / 2
-        while abs(start - mid) > 10**-7:  # until we achieve precise equals to 10^-7
+        while abs(start - mid) > 10 ** -7:  # until we achieve precise equals to 10^-7
             if function(mid) == 0:
                 return mid
             elif function(mid) * function(start) < 0:
@@ -27,7 +27,8 @@ def bisection(function, a, b):  # finds where the function becomes 0 in [a,b] us
 
 
 def f(x):
-    return math.pow(x, 3) - 2*x - 5
+    return math.pow(x, 3) - 2 * x - 5
+
 
 if __name__ == "__main__":
     print(bisection(f, 1, 1000))

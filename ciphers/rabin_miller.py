@@ -1,7 +1,10 @@
 from __future__ import print_function
-# Primality Testing with the Rabin-Miller Algorithm
 
 import random
+
+
+# Primality Testing with the Rabin-Miller Algorithm
+
 
 def rabinMiller(num):
     s = num - 1
@@ -23,6 +26,7 @@ def rabinMiller(num):
                     i = i + 1
                     v = (v ** 2) % num
     return True
+
 
 def isPrime(num):
     if (num < 2):
@@ -52,11 +56,13 @@ def isPrime(num):
 
     return rabinMiller(num)
 
-def generateLargePrime(keysize = 1024):
+
+def generateLargePrime(keysize=1024):
     while True:
         num = random.randrange(2 ** (keysize - 1), 2 ** (keysize))
         if isPrime(num):
             return num
+
 
 if __name__ == '__main__':
     num = generateLargePrime()

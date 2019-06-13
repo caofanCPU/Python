@@ -44,7 +44,7 @@ import numpy
 def gcd(a, b):
     if a == 0:
         return b
-    return gcd(b%a, a)
+    return gcd(b % a, a)
 
 
 class HillCipher:
@@ -59,19 +59,19 @@ class HillCipher:
     modulus = numpy.vectorize(lambda x: x % 36)
 
     toInt = numpy.vectorize(lambda x: round(x))
-    
+
     def __init__(self, encrypt_key):
         """
         encrypt_key is an NxN numpy matrix
         """
-        self.encrypt_key = self.modulus(encrypt_key) # mod36 calc's on the encrypt key
-        self.checkDeterminant() # validate the determinant of the encryption key
+        self.encrypt_key = self.modulus(encrypt_key)  # mod36 calc's on the encrypt key
+        self.checkDeterminant()  # validate the determinant of the encryption key
         self.decrypt_key = None
         self.break_key = encrypt_key.shape[0]
 
     def checkDeterminant(self):
         det = round(numpy.linalg.det(self.encrypt_key))
-        
+
         if det < 0:
             det = det % len(self.key_string)
 
@@ -88,13 +88,13 @@ class HillCipher:
             text.append(last)
 
         return ''.join(text)
-    
+
     def encrypt(self, text):
         text = self.processText(text.upper())
         encrypted = ''
 
         for i in range(0, len(text) - self.break_key + 1, self.break_key):
-            batch = text[i:i+self.break_key]
+            batch = text[i:i + self.break_key]
             batch_vec = list(map(self.replaceLetters, batch))
             batch_vec = numpy.matrix([batch_vec]).T
             batch_encrypted = self.modulus(self.encrypt_key.dot(batch_vec)).T.tolist()[0]
@@ -105,7 +105,7 @@ class HillCipher:
 
     def makeDecryptKey(self):
         det = round(numpy.linalg.det(self.encrypt_key))
-        
+
         if det < 0:
             det = det % len(self.key_string)
         det_inv = None
@@ -114,18 +114,18 @@ class HillCipher:
                 det_inv = i
                 break
 
-        inv_key = det_inv * numpy.linalg.det(self.encrypt_key) *\
+        inv_key = det_inv * numpy.linalg.det(self.encrypt_key) * \
                   numpy.linalg.inv(self.encrypt_key)
 
         return self.toInt(self.modulus(inv_key))
-    
+
     def decrypt(self, text):
         self.decrypt_key = self.makeDecryptKey()
         text = self.processText(text.upper())
         decrypted = ''
 
         for i in range(0, len(text) - self.break_key + 1, self.break_key):
-            batch = text[i:i+self.break_key]
+            batch = text[i:i + self.break_key]
             batch_vec = list(map(self.replaceLetters, batch))
             batch_vec = numpy.matrix([batch_vec]).T
             batch_decrypted = self.modulus(self.decrypt_key.dot(batch_vec)).T.tolist()[0]
@@ -161,7 +161,7 @@ def main():
         text_d = input("What text would you like to decrypt?: ")
         print("Your decrypted text is:")
         print(hc.decrypt(text_d))
-    
+
 
 if __name__ == "__main__":
     main()

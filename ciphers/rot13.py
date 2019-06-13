@@ -1,4 +1,6 @@
 from __future__ import print_function
+
+
 def dencrypt(s, n):
     out = ''
     for c in s:

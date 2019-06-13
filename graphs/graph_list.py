@@ -2,6 +2,8 @@
 # encoding=utf8
 
 from __future__ import print_function
+
+
 # Author: OMKAR PATHAK
 
 # We can use Python's dictionary for constructing the graph.
@@ -18,8 +20,9 @@ class AdjacencyList(object):
             self.List[fromVertex] = [toVertex]
 
     def printList(self):
-        for i  in self.List:
-            print((i,'->',' -> '.join([str(j) for j in self.List[i]])))
+        for i in self.List:
+            print((i, '->', ' -> '.join([str(j) for j in self.List[i]])))
+
 
 if __name__ == '__main__':
     al = AdjacencyList()

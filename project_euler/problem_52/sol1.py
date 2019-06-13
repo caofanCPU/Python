@@ -1,4 +1,5 @@
 from __future__ import print_function
+
 '''
 Permuted multiples
 Problem 52
@@ -10,14 +11,14 @@ Find the smallest positive integer, x, such that 2x, 3x, 4x, 5x, and 6x, contain
 i = 1
 
 while True:
-	if sorted(list(str(i))) == \
-       sorted(list(str(2*i))) == \
-       sorted(list(str(3*i))) == \
-       sorted(list(str(4*i))) == \
-       sorted(list(str(5*i))) == \
-       sorted(list(str(6*i))):
-		break
+    if sorted(list(str(i))) == \
+            sorted(list(str(2 * i))) == \
+            sorted(list(str(3 * i))) == \
+            sorted(list(str(4 * i))) == \
+            sorted(list(str(5 * i))) == \
+            sorted(list(str(6 * i))):
+        break
 
-	i += 1
+    i += 1
 
-print(i) 
+print(i)

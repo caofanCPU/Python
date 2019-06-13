@@ -19,7 +19,7 @@ def dfs(graph, start):
     explored.add(start)
     while stack:
         v = stack.pop()  # one difference from BFS is to pop last element here instead of first one
-        
+
         if v in explored:
             continue
 

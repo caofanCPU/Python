@@ -44,7 +44,7 @@ def counting_sort(collection):
     # sum each position with it's predecessors. now, counting_arr[i] tells
     # us how many elements <= i has in the collection
     for i in range(1, counting_arr_length):
-        counting_arr[i] = counting_arr[i] + counting_arr[i-1]
+        counting_arr[i] = counting_arr[i] + counting_arr[i - 1]
 
     # create the output collection
     ordered = [0] * coll_len
@@ -52,10 +52,11 @@ def counting_sort(collection):
     # place the elements in the output, respecting the original order (stable
     # sort) from end to begin, updating counting_arr
     for i in reversed(range(0, coll_len)):
-        ordered[counting_arr[collection[i] - coll_min]-1] = collection[i]
+        ordered[counting_arr[collection[i] - coll_min] - 1] = collection[i]
         counting_arr[collection[i] - coll_min] -= 1
 
     return ordered
+
 
 def counting_sort_string(string):
     return ''.join([chr(i) for i in counting_sort([ord(c) for c in string])])
@@ -66,7 +67,7 @@ if __name__ == '__main__':
     assert "eghhiiinrsssttt" == counting_sort_string("thisisthestring")
 
     try:
-        raw_input          # Python 2
+        raw_input  # Python 2
     except NameError:
         raw_input = input  # Python 3
 

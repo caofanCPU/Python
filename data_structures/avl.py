@@ -102,9 +102,9 @@ class AVL:
                     left_child = n.left
                     if left_child is not None:
                         h_right = (left_child.right.height
-                                    if (left_child.right is not None) else 0)
+                                   if (left_child.right is not None) else 0)
                         h_left = (left_child.left.height
-                                    if (left_child.left is not None) else 0)
+                                  if (left_child.left is not None) else 0)
                     if (h_left > h_right):
                         self.rotate_left(n)
                         break
@@ -115,9 +115,9 @@ class AVL:
                     right_child = n.right
                     if right_child is not None:
                         h_right = (right_child.right.height
-                            if (right_child.right is not None) else 0)
+                                   if (right_child.right is not None) else 0)
                         h_left = (right_child.left.height
-                            if (right_child.left is not None) else 0)
+                                  if (right_child.left is not None) else 0)
                     if (h_left > h_right):
                         self.double_rotate_left(n)
                         break
@@ -132,7 +132,6 @@ class AVL:
         node.parent.right = Node(aux)
         node.parent.right.height = node.parent.height + 1
         node.parent.left = node.right
-
 
     def rotate_right(self, node):
         aux = node.parent.label
@@ -168,6 +167,7 @@ class AVL:
 
     def getRoot(self):
         return self.root
+
 
 t = AVL()
 t.insert(1)

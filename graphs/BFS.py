@@ -14,8 +14,6 @@ while Q is non-empty:
 
 """
 
-import collections
-
 
 def bfs(graph, start):
     explored, queue = set(), [start]  # collections.deque([start])

@@ -17,11 +17,10 @@ from __future__ import print_function
 
 
 def is_balanced(S):
-
     stack = []
     open_brackets = set({'(', '[', '{'})
     closed_brackets = set({')', ']', '}'})
-    open_to_closed = dict({'{':'}', '[':']', '(':')'})
+    open_to_closed = dict({'{': '}', '[': ']', '(': ')'})
 
     for i in range(len(S)):
 
@@ -36,7 +35,6 @@ def is_balanced(S):
 
 
 def main():
-
     S = input("Enter sequence of brackets: ")
 
     if is_balanced(S):

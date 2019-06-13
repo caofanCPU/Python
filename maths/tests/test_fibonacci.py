@@ -8,6 +8,7 @@ To run with slash:
 """
 
 import slash
+
 from .. import fibonacci
 
 default_fib = [0, 1, 1, 2, 3, 5, 8]
@@ -31,4 +32,3 @@ def test_float_input_iterative(n):
     formula = fibonacci.fib_formula(n)
     assert iterative == default_fib
     assert formula == default_fib
-

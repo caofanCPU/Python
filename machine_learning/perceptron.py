@@ -30,7 +30,7 @@ class Perceptron:
             sample.insert(0, self.bias)
 
         for i in range(self.col_sample):
-           self.weight.append(random.random())
+            self.weight.append(random.random())
 
         self.weight.insert(0, self.bias)
 
@@ -46,16 +46,15 @@ class Perceptron:
                 if y != self.exit[i]:
 
                     for j in range(self.col_sample + 1):
-
                         self.weight[j] = self.weight[j] + self.learn_rate * (self.exit[i] - y) * self.sample[i][j]
                     erro = True
-            #print('Epoch: \n',epoch_count)
+            # print('Epoch: \n',epoch_count)
             epoch_count = epoch_count + 1
             # if you want controle the epoch or just by erro
             if erro == False:
-                print(('\nEpoch:\n',epoch_count))
+                print(('\nEpoch:\n', epoch_count))
                 print('------------------------\n')
-            #if epoch_count > self.epoch_number or not erro:
+                # if epoch_count > self.epoch_number or not erro:
                 break
 
     def sort(self, sample):
@@ -66,7 +65,7 @@ class Perceptron:
 
         y = self.sign(u)
 
-        if  y == -1:
+        if y == -1:
             print(('Sample: ', sample))
             print('classification: P1')
         else:
@@ -113,7 +112,7 @@ samples = [
 
 exit = [-1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1]
 
-network = Perceptron(sample=samples, exit = exit, learn_rate=0.01, epoch_number=1000, bias=-1)
+network = Perceptron(sample=samples, exit=exit, learn_rate=0.01, epoch_number=1000, bias=-1)
 
 network.trannig()
 

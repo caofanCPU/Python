@@ -13,6 +13,7 @@ Note: The tree input will be such that it can always be decomposed into
 components containing an even number of nodes.
 """
 from __future__ import print_function
+
 # pylint: disable=invalid-name
 from collections import defaultdict
 

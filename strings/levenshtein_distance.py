@@ -48,7 +48,6 @@ def levenshtein_distance(first_word, second_word):
         current_row = [i + 1]
 
         for j, c2 in enumerate(second_word):
-
             # Calculate insertions, deletions and substitutions
             insertions = previous_row[j + 1] + 1
             deletions = current_row[j] + 1
@@ -66,7 +65,7 @@ def levenshtein_distance(first_word, second_word):
 
 if __name__ == '__main__':
     try:
-        raw_input          # Python 2
+        raw_input  # Python 2
     except NameError:
         raw_input = input  # Python 3
 

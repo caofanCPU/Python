@@ -1,5 +1,8 @@
 from __future__ import print_function
-import pprint, time
+
+import pprint
+import time
+
 
 def getWordPattern(word):
     word = word.upper()
@@ -13,6 +16,7 @@ def getWordPattern(word):
             nextNum += 1
         wordPattern.append(letterNums[letter])
     return '.'.join(wordPattern)
+
 
 def main():
     startTime = time.time()
@@ -34,6 +38,7 @@ def main():
 
     totalTime = round(time.time() - startTime, 2)
     print(('Done! [', totalTime, 'seconds ]'))
+
 
 if __name__ == '__main__':
     main()

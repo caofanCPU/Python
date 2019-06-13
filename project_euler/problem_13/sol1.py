@@ -11,4 +11,3 @@ for i in range(n):
     array.append(int(input().strip()))
 
 print(str(sum(array))[:10])
-

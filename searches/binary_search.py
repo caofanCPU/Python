@@ -10,10 +10,11 @@ For manual testing run:
 python binary_search.py
 """
 from __future__ import print_function
+
 import bisect
 
 try:
-    raw_input          # Python 2
+    raw_input  # Python 2
 except NameError:
     raw_input = input  # Python 3
 
@@ -85,8 +86,8 @@ def binary_search_std_lib(sorted_collection, item):
         return index
     return None
 
-def binary_search_by_recursion(sorted_collection, item, left, right):
 
+def binary_search_by_recursion(sorted_collection, item, left, right):
     """Pure implementation of binary search algorithm in Python by recursion
 
     Be careful collection must be ascending sorted, otherwise result will be
@@ -112,16 +113,17 @@ def binary_search_by_recursion(sorted_collection, item, left, right):
     """
     if (right < left):
         return None
-    
+
     midpoint = left + (right - left) // 2
 
     if sorted_collection[midpoint] == item:
         return midpoint
     elif sorted_collection[midpoint] > item:
-        return binary_search_by_recursion(sorted_collection, item, left, midpoint-1)
+        return binary_search_by_recursion(sorted_collection, item, left, midpoint - 1)
     else:
-        return binary_search_by_recursion(sorted_collection, item, midpoint+1, right)
-      
+        return binary_search_by_recursion(sorted_collection, item, midpoint + 1, right)
+
+
 def __assert_sorted(collection):
     """Check if collection is ascending sorted, if not - raises :py:class:`ValueError`
 
@@ -145,6 +147,7 @@ def __assert_sorted(collection):
 
 if __name__ == '__main__':
     import sys
+
     user_input = raw_input('Enter numbers separated by comma:\n').strip()
     collection = [int(item) for item in user_input.split(',')]
     try:

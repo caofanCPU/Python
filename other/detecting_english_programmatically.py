@@ -3,6 +3,7 @@ import os
 UPPERLETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 LETTERS_AND_SPACE = UPPERLETTERS + UPPERLETTERS.lower() + ' \t\n'
 
+
 def loadDictionary():
     path = os.path.split(os.path.realpath(__file__))
     englishWords = {}
@@ -11,7 +12,9 @@ def loadDictionary():
             englishWords[word] = None
     return englishWords
 
+
 ENGLISH_WORDS = loadDictionary()
+
 
 def getEnglishCount(message):
     message = message.upper()
@@ -28,6 +31,7 @@ def getEnglishCount(message):
 
     return float(matches) / len(possibleWords)
 
+
 def removeNonLetters(message):
     lettersOnly = []
     for symbol in message:
@@ -35,7 +39,8 @@ def removeNonLetters(message):
             lettersOnly.append(symbol)
     return ''.join(lettersOnly)
 
-def isEnglish(message, wordPercentage = 20, letterPercentage = 85):
+
+def isEnglish(message, wordPercentage=20, letterPercentage=85):
     """
     >>> isEnglish('Hello World')
     True
@@ -51,4 +56,5 @@ def isEnglish(message, wordPercentage = 20, letterPercentage = 85):
 
 
 import doctest
+
 doctest.testmod()

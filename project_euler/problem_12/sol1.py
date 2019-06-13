@@ -1,5 +1,7 @@
 from __future__ import print_function
+
 from math import sqrt
+
 '''
 Highly divisible triangular numbers
 Problem 12
@@ -21,28 +23,30 @@ We can see that 28 is the first triangle number to have over five divisors.
 What is the value of the first triangle number to have over five hundred divisors?
 '''
 try:
-	xrange		#Python 2
+    xrange  # Python 2
 except NameError:
-	xrange = range	#Python 3
+    xrange = range  # Python 3
+
 
 def count_divisors(n):
-	nDivisors = 0
-	for i in xrange(1, int(sqrt(n))+1):
-		if n%i == 0:
-			nDivisors += 2
-	#check if n is perfect square 
-	if n**0.5 == int(n**0.5): 
-        	nDivisors -= 1
-	return nDivisors
+    nDivisors = 0
+    for i in xrange(1, int(sqrt(n)) + 1):
+        if n % i == 0:
+            nDivisors += 2
+    # check if n is perfect square
+    if n ** 0.5 == int(n ** 0.5):
+        nDivisors -= 1
+    return nDivisors
+
 
 tNum = 1
 i = 1
 
 while True:
-	i += 1
-	tNum += i
+    i += 1
+    tNum += i
 
-	if count_divisors(tNum) > 500:
-		break
+    if count_divisors(tNum) > 500:
+        break
 
 print(tNum)

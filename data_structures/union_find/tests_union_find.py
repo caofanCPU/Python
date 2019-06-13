@@ -1,6 +1,8 @@
 from __future__ import absolute_import
-from .union_find import UnionFind
+
 import unittest
+
+from .union_find import UnionFind
 
 
 class TestUnionFind(unittest.TestCase):

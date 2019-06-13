@@ -12,9 +12,10 @@ python linear_search.py
 from __future__ import print_function
 
 try:
-    raw_input          # Python 2
+    raw_input  # Python 2
 except NameError:
     raw_input = input  # Python 3
+
 
 def linear_search(sequence, target):
     """Pure implementation of linear search algorithm in Python

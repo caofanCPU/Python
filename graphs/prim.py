@@ -76,4 +76,4 @@ def prim(graph, root):
                 v.key = u.edges[v.id]
     for i in range(1, len(graph)):
         A.append([graph[i].id, graph[i].pi.id])
-    return(A)
+    return (A)

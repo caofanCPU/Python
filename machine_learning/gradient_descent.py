@@ -2,6 +2,7 @@
 Implementation of gradient descent algorithm for minimizing cost of a linear hypothesis function.
 """
 from __future__ import print_function, division
+
 import numpy
 
 # List of input, output pairs
@@ -33,7 +34,7 @@ def _hypothesis_value(data_input_tuple):
     """
     hyp_val = 0
     for i in range(len(parameter_vector) - 1):
-        hyp_val += data_input_tuple[i]*parameter_vector[i+1]
+        hyp_val += data_input_tuple[i] * parameter_vector[i + 1]
     hyp_val += parameter_vector[0]
     return hyp_val
 
@@ -76,7 +77,7 @@ def summation_of_cost_derivative(index, end=m):
         if index == -1:
             summation_value += _error(i)
         else:
-            summation_value += _error(i)*train_data[i][0][index]
+            summation_value += _error(i) * train_data[i][0][index]
     return summation_value
 
 
@@ -86,7 +87,7 @@ def get_cost_derivative(index):
     :return: derivative wrt to that index
     Note: If index is -1, this means we are calculating summation wrt to biased parameter.
     """
-    cost_derivative_value = summation_of_cost_derivative(index, m)/m
+    cost_derivative_value = summation_of_cost_derivative(index, m) / m
     return cost_derivative_value
 
 
@@ -100,9 +101,9 @@ def run_gradient_descent():
         j += 1
         temp_parameter_vector = [0, 0, 0, 0]
         for i in range(0, len(parameter_vector)):
-            cost_derivative = get_cost_derivative(i-1)
+            cost_derivative = get_cost_derivative(i - 1)
             temp_parameter_vector[i] = parameter_vector[i] - \
-                LEARNING_RATE*cost_derivative
+                                       LEARNING_RATE * cost_derivative
         if numpy.allclose(parameter_vector, temp_parameter_vector,
                           atol=absolute_error_limit, rtol=relative_error_limit):
             break

@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
+import argparse
 #
 # Sort large text files in a minimum amount of memory
 #
 import os
-import argparse
+
 
 class FileSplitter(object):
     BLOCK_FILENAME_FORMAT = 'block_{0}.dat'
@@ -106,7 +107,6 @@ class FileMerger(object):
         return files
 
 
-
 class ExternalSort(object):
     def __init__(self, block_size):
         self.block_size = block_size
@@ -135,7 +135,6 @@ def parse_memory(string):
         return int(string[:-1]) * 1024 * 1024 * 1024
     else:
         return int(string)
-
 
 
 def main():

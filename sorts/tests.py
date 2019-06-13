@@ -8,11 +8,11 @@ from cycle_sort import cycle_sort
 from gnome_sort import gnome_sort
 from heap_sort import heap_sort
 from insertion_sort import insertion_sort
-from merge_sort_fastest import merge_sort as merge_sort_fastest
 from merge_sort import merge_sort
+from merge_sort_fastest import merge_sort as merge_sort_fastest
 from pancake_sort import pancake_sort
-from quick_sort_3_partition import quick_sort_3partition
 from quick_sort import quick_sort
+from quick_sort_3_partition import quick_sort_3partition
 from radix_sort import radix_sort
 from random_pivot_quick_sort import quick_sort_random
 from selection_sort import selection_sort
@@ -21,7 +21,6 @@ from tim_sort import tim_sort
 from topological_sort import topological_sort
 from tree_sort import tree_sort
 from wiggle_sort import wiggle_sort
-
 
 TEST_CASES = [
     {'input': [8, 7, 6, 5, 4, 3, -2, -5], 'expected': [-5, -2, 3, 4, 5, 6, 7, 8]},
@@ -67,8 +66,7 @@ TEST_FUNCTIONS = [
     wiggle_sort,
 ]
 
-
 for function in TEST_FUNCTIONS:
     for case in TEST_CASES:
         result = function(case['input'])
-        assert result  == case['expected'], 'Executed function: {}, {} != {}'.format(function.__name__, result, case['expected'])
+        assert result == case['expected'], 'Executed function: {}, {} != {}'.format(function.__name__, result, case['expected'])

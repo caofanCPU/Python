@@ -1,11 +1,18 @@
 from __future__ import print_function
-import random, sys, os
-import rabin_miller as rabinMiller, cryptomath_module as cryptoMath
+
+import os
+import random
+import sys
+
+import cryptomath_module as cryptoMath
+import rabin_miller as rabinMiller
+
 
 def main():
     print('Making key files...')
     makeKeyFiles('rsa', 1024)
     print('Key files generation successful.')
+
 
 def generateKey(keySize):
     print('Generating prime p...')
@@ -27,6 +34,7 @@ def generateKey(keySize):
     privateKey = (n, d)
     return (publicKey, privateKey)
 
+
 def makeKeyFiles(name, keySize):
     if os.path.exists('%s_pubkey.txt' % (name)) or os.path.exists('%s_privkey.txt' % (name)):
         print('\nWARNING:')
@@ -41,6 +49,7 @@ def makeKeyFiles(name, keySize):
     print('Writing private key to file %s_privkey.txt...' % name)
     with open('%s_privkey.txt' % name, 'w') as fo:
         fo.write('%s,%s,%s' % (keySize, privateKey[0], privateKey[1]))
+
 
 if __name__ == '__main__':
     main()
