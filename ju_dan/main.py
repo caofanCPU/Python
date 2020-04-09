@@ -18,12 +18,16 @@ def handle_content(msg):
             content = msg['Text']
         else:
             content = '非文本内容'
+        # 内容最多1024个字符
+        content = custom_str(content, 1024)
         time_stamp = msg['CreateTime']
         create_time = time.strftime("%Y--%m--%d %H:%M:%S", time.localtime(time_stamp))
         current_talk_group_id = msg['User']['UserName']
-        current_talk_group_name = msg['User']['NickName']
-        from_user_name = msg['ActualNickName']
+        # 内容最多64个字符
+        current_talk_group_name = custom_str(msg['User']['NickName'], 64)
         from_user_id = msg['ActualUserName']
+        # 发送者昵称最多1024个字符
+        from_user_name = custom_str(msg['ActualNickName'], 64)
         sql = "INSERT INTO wx_group_chat(msg_type, content, sender_id, sender_name,\
                  group_id, group_name, time_stamp, create_time) \
                   VALUE ('%d','%s','%s','%s','%s','%s','%d','%s');"\
@@ -33,6 +37,20 @@ def handle_content(msg):
     except Exception as e:
         logger.debug(e)
         return
+
+
+def custom_str(source, length):
+    """
+    处理字符串长度, 并将'字符转义\'
+    :param source:
+    :param length:
+    :return:
+    """
+    if len(source) > length:
+        fix_length_sub_str = source[0:length-1]
+    else:
+        fix_length_sub_str = source
+    return fix_length_sub_str.replace("'", "\\'")
 
 
 def build_logs():
@@ -63,8 +81,8 @@ def build_logs():
 
 def connect_mysql(logger):
     try:
-        db = pymysql.connect(host='47.93.206.227', port=3306, user='root', passwd='root', db='spring_clould', charset='utf8mb4')
-        # db = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='root', db='spring_clould', charset='utf8mb4')
+        #db = pymysql.connect(host='47.93.206.227', port=3306, user='root', passwd='root', db='spring_clould', charset='utf8mb4')
+        db = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='root', db='spring_clould', charset='utf8mb4')
         return db
     except Exception as e:
         logger.debug('MySQL数据库连接失败')
@@ -97,8 +115,7 @@ def select_db(db, sql, logger):
 
 def main():
     # 手机扫码登录
-    newInstance = itchat.new_instance()
-    newInstance.auto_login(hotReload=True, enableCmdQR=2)
+    itchat.auto_login(hotReload=True, enableCmdQR=2)
     global logger
     logger = build_logs()
     global db
