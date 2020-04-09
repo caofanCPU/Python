@@ -1,11 +1,11 @@
 {
-  "url": "https://live.testa.huitong.com/api/v100/live/employee/upload/dibblingVideo/deleteCategory",
+  "url": "https://live.testa.huitong.com/api/v100/live/employee/upload/dibblingVideo/detail",
   "method": "POST",
   "headers" : [
       "Content-Type:application/json",
       "HT-app:6"
   ],
   "body": [
-    "categoryId=NONE"
+      "videoId=NONE"
   ]
 }

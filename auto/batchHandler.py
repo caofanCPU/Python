@@ -22,7 +22,7 @@ httpie_allow_view = {
     "-v": "显示请求详细信息",
     "-h": "显示请求头",
     "-b": "显示请求Body",
-    "-d": "下载文件",
+    "-d": "响应结果保存至TXT",
     "": "默认"
 }
 httpie_view = None
@@ -31,7 +31,7 @@ try:
         if httpie_allow_view.get(sys.argv[1]) is not None:
             httpie_view = sys.argv[1]
         else:
-            print("输入参数有误, 仅支持如下参数: -v显示请求详细信息|-h显示请求头|-b显示请求Body|-d下载文件")
+            print("输入参数有误, 仅支持如下参数: -v显示请求详细信息|-h显示请求头|-b显示请求Body|-d响应结果保存至TXT")
 except Exception as e:
     print(e)
 

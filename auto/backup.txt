@@ -11,3 +11,6 @@
 
 - 删除分类(/api/v100/live/employee/upload/dibblingVideo/deleteCategory)
 "categoryId=NONE"
+
+- 视频详情(/api/v100/live/employee/upload/dibblingVideo/detail)
+"videoId=NONE"
