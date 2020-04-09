@@ -21,7 +21,7 @@ def handle_content(msg):
         # 内容最多1024个字符
         content = custom_str(content, 1024)
         time_stamp = msg['CreateTime']
-        create_time = time.strftime("%Y--%m--%d %H:%M:%S", time.localtime(time_stamp))
+        create_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_stamp))
         current_talk_group_id = msg['User']['UserName']
         # 内容最多64个字符
         current_talk_group_name = custom_str(msg['User']['NickName'], 64)
@@ -54,8 +54,6 @@ def custom_str(source, length):
 
 
 def build_logs():
-    # 获取当前时间
-    now_time = time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime())
     # 设置log名称
     log_name = "wx.log"
     # 定义logger
