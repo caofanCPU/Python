@@ -1,0 +1,13 @@
+- 创建分类(/api/v100/live/employee/upload/dibblingVideo/addCategory)
+"name=默认分类",
+"schoolId=NONE"
+
+- 登录
+"phone=18999999999",
+"smsAuthCode=123456",
+"loginType:=0",
+"pwd=ht123456.",
+
+
+- 删除分类(/api/v100/live/employee/upload/dibblingVideo/deleteCategory)
+"categoryId=NONE"

@@ -79,12 +79,14 @@ def normal_distribution_pdf(x, mu, sigma):
 
 def calculate_points(mu, sigma):
     point = []
-    i = mu - 3 * sigma
-    while mu - 3 * sigma <= i <= mu + 3 * sigma:
+    i = mu - 2 * sigma
+    while mu - 2 * sigma <= i <= mu + 2 * sigma:
         point.append(i)
         i += sigma
     x = np.array(point)
     y = normal_distribution_pdf(x, mu, sigma)
+    for i in range(0, len(x)):
+        print(x[i], y[i])
     return [x, y]
 
 
@@ -110,6 +112,7 @@ def plot_pdf(statistical_indicators):
 
     points = calculate_points(mu, sigma)
     plt.scatter(points[0], points[1], marker='<', s=30, c='green')
+
     # 绘制垂线plt.vlines
     for x_i in points[0]:
         plt.vlines(x_i, plt.ylim()[0], plt.ylim()[1], linestyles=':', linewidth=1)
@@ -128,3 +131,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
