@@ -1,5 +1,5 @@
 {
-  "url": "https://live.testa.huitong.com/api/v100/live/employee/upload/dibblingVideo/detail",
+  "url": "http://localhost:8127/ruok",
   "method": "POST",
   "headers" : [
       "Content-Type:application/json",
