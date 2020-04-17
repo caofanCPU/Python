@@ -1,11 +1,12 @@
 {
-  "url": "http://localhost:8127/ruok",
+  "url": "https://live.testx.huitong.com/api/v100/live/employee/upload/dibblingVideo/addCategory",
   "method": "POST",
   "headers" : [
       "Content-Type:application/json",
       "HT-app:6"
   ],
   "body": [
-      "videoId=NONE"
+      "name=默认分类",
+      "schoolId=NONE"
   ]
 }

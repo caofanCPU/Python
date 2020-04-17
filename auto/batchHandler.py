@@ -63,13 +63,12 @@ def httpie_cmd(id):
         httpie_params.append(httpie_view)
     httpie_params.extend([method, url, headers, body])
     httpie = joiner.join(httpie_params)
-    # print(httpie)
     executeStartTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
     # 延时执行
     # time.sleep(0.05)
     subprocess.call(httpie, shell=True)
     executeEndTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
-    return "当前[ID={}, [executeStartTime={}], [executeEndTime={}]".format(id, executeStartTime, executeEndTime)
+    return "执行命令\n{}\n当前[ID={}], [executeStartTime={}], [executeEndTime={}]".format(httpie, id, executeStartTime, executeEndTime)
 
 
 def load_request_headers(headers, hot_reload):
