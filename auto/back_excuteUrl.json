@@ -1,11 +1,11 @@
 {
-  "url": "http://172.16.10.41:8119/api/v100/user_new/userRole/detail",
+  "url": "http://127.0.0.1:8119/ruok/sentinel",
   "method": "POST",
   "headers" : [
       "Content-Type:application/json",
       "HT-app:6"
   ],
   "body": [
-      "subAccountId=NONE"
+      "id=NONE"
   ]
 }

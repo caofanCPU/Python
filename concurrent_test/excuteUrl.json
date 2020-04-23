@@ -1,0 +1,11 @@
+{
+  "url": "http://172.16.10.41:8119/api/v100/user_new/userRole/detail",
+  "method": "POST",
+  "headers" : {
+    "Content-Type": "application/json",
+    "HT-app": 6
+  },
+  "body": {
+    "subAccountId": 10009984
+  }
+}

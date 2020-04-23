@@ -1,5 +1,5 @@
 {
-  "url": "https://sso.testx.huitong.com/api/v100/ssonew/login",
+  "url": "https://sso.testa.huitong.com/api/v100/ssonew/login",
   "method": "POST",
   "headers" : [
       "Content-Type:application/json",
