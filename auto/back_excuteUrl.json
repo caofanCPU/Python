@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:8119/ruok/sentinel",
+  "url": "http://172.16.10.41:8119/ruok/sentinel",
   "method": "POST",
   "headers" : [
       "Content-Type:application/json",
