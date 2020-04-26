@@ -19,7 +19,7 @@ cmd = "http"
 no_ca = "--verify=no"
 httpie_allow_view = {"-v": "显示请求详细信息", "-h": "显示请求头", "-b": "显示请求Body", "-d": "响应结果保存至TXT", "": "默认"}
 httpie_view = None
-# 并发数
+# 最大并发数
 max_concurrent = 64
 concurrent = 1
 try:
@@ -130,7 +130,9 @@ def auto_login():
     # request_headers = {"Content-Type": "application/json", "HT-app": "6"}
     response = requests.request(method, url, headers=request_headers, json=request_body, timeout=3, verify=False)
     response_headers = response.headers
-    cookie = response_headers.get("set-Cookie")
+    # 处理Cookie, 多个Cookie之间使用';'分隔, 否则校验cookie时出现"domain."在高版本中tomcat中报错
+    # https://blog.csdn.net/w57685321/article/details/84943176
+    cookie = response_headers.get("set-Cookie").replace(", _r", "; _r").replace(", _a", "; _a")
     # JSON标准格式
     response_body = json.dumps(response.json(), ensure_ascii=False, indent=4)
     print("登录响应Cookie结果: \n{}\n登录响应BODY结果: {}".format(cookie, response_body))

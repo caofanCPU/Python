@@ -11,23 +11,31 @@ import requests
 # 屏蔽HTTPS证书校验, 忽略安全警告
 requests.packages.urllib3.disable_warnings()
 context = ssl._create_unverified_context()
-joiner = ' '
-# 并发数
-max_concurrent = 64
-concurrent = 1
-# 是否开启并发测试
-try:
+
+
+def init_param():
+    joiner = ' '
+    # 并发数
+    max_concurrent = 64
+    concurrent = 1
+    execute_num = 1
     if len(sys.argv) > 1:
         try:
-            input_concurrent = int(sys.argv[2])
+            input_concurrent = int(sys.argv[1])
             if input_concurrent > 1:
                 concurrent = min(input_concurrent, max_concurrent)
         except Exception as e:
             print("并发数设置范围[1, {}], 默认1".format(max_concurrent))
             print(e)
-except Exception as e:
-    print(e)
-executor = ThreadPoolExecutor(max_workers=concurrent)
+    if len(sys.argv) > 2:
+        try:
+            if int(sys.argv[2]) > 1:
+                execute_num = int(sys.argv[2])
+        except Exception as e:
+            print(e)
+    init_cookie = auto_login()
+    executor = ThreadPoolExecutor(max_workers=concurrent)
+    return [joiner, execute_num, init_cookie, executor]
 
 
 def execute_http(i):
@@ -72,7 +80,9 @@ def auto_login():
     # request_headers = {"Content-Type": "application/json", "HT-app": "6"}
     response = requests.request(method, url, headers=request_headers, json=request_body, timeout=3, verify=False)
     response_headers = response.headers
-    cookie = response_headers.get("set-Cookie")
+    # 处理Cookie, 多个Cookie之间使用';'分隔, 否则校验cookie时出现"domain."在高版本中tomcat中报错
+    # https://blog.csdn.net/w57685321/article/details/84943176
+    cookie = response_headers.get("set-Cookie").replace(", _r", "; _r").replace(", _a", "; _a")
     # JSON标准格式
     response_body = json.dumps(response.json(), ensure_ascii=False, indent=4)
     print("登录响应Cookie结果: \n{}\n登录响应BODY结果: {}".format(cookie, response_body))
@@ -91,13 +101,20 @@ def handle_json_str_value(json):
 
 
 def main():
-    # 全局变量cookie, 初始化为空
+    # 初始化参数
+    initial_param_list = init_param()
+    # 全局变量
+    global joiner
+    global execute_num
     global init_cookie
-    init_cookie = auto_login()
-    nums = list(range(1, 20))
-    while True:
-        for result in executor.map(execute_http, nums):
-            print(result)
+    global executor
+    joiner = initial_param_list[0]
+    execute_num = initial_param_list[1]
+    init_cookie = initial_param_list[2]
+    executor = initial_param_list[3]
+    nums = list(range(0, execute_num))
+    for result in executor.map(execute_http, nums):
+        print(result)
 
 
 if __name__ == '__main__':
