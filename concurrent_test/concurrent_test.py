@@ -49,7 +49,6 @@ def execute_http(i):
     url = request_json['url']
     method = request_json['method']
     request_headers = handle_json_str_value(request_json['headers'])
-    executeStartTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
     request_headers['Cookie'] = init_cookie
     request_body = handle_json_str_value(request_json['body'])
     response_body = {
@@ -57,6 +56,7 @@ def execute_http(i):
         "msg": "接口执行失败",
         "data": "请检查接口是否返回JSON格式的相应数据, 以及抛出未经处理的特殊异常"
     }
+    executeStartTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
     try:
         response = requests.request(method, url, headers=request_headers, json=request_body, timeout=3, verify=False)
         # JSON标准格式
