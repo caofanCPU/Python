@@ -1,14 +1,14 @@
 {
   "url": "https://sso.testa.huitong.com/api/v100/ssonew/login",
   "method": "POST",
-  "headers" : [
-      "Content-Type:application/json",
-      "HT-app:6"
-  ],
-  "body": [
-    "phone=18999999999",
-    "smsAuthCode=123456",
-    "loginType:=0",
-    "pwd=ht123456."
-  ]
+  "headers": {
+    "Content-Type": "application/json",
+    "HT-app": 6
+  },
+  "body": {
+    "phone": "18999999999",
+    "smsAuthCode": "123456",
+    "loginType": 0,
+    "pwd": "ht123456."
+  }
 }
