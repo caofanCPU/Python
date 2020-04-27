@@ -115,8 +115,8 @@ def main():
     executor = initial_param_list[1]
     init_cookie = initial_param_list[2]
     nums = list(range(0, execute_num))
-    # for result in executor.map(execute_http, nums):
-    #     print(result)
+    for result in executor.map(execute_http, nums):
+        print(result)
 
 
 if __name__ == '__main__':
