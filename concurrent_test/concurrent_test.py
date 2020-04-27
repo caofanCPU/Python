@@ -3,39 +3,43 @@
 import datetime
 import json
 import ssl
-import sys
 from concurrent.futures.thread import ThreadPoolExecutor
 
 import requests
+
+import numpy as np
+import argparse
 
 # 屏蔽HTTPS证书校验, 忽略安全警告
 requests.packages.urllib3.disable_warnings()
 context = ssl._create_unverified_context()
 
 
-def init_param():
-    joiner = ' '
-    # 并发数
-    max_concurrent = 64
-    concurrent = 1
-    execute_num = 1
-    if len(sys.argv) > 1:
-        try:
-            input_concurrent = int(sys.argv[1])
-            if input_concurrent > 1:
-                concurrent = min(input_concurrent, max_concurrent)
-        except Exception as e:
-            print("并发数设置范围[1, {}], 默认1".format(max_concurrent))
-            print(e)
-    if len(sys.argv) > 2:
-        try:
-            if int(sys.argv[2]) > 1:
-                execute_num = int(sys.argv[2])
-        except Exception as e:
-            print(e)
-    init_cookie = auto_login()
-    executor = ThreadPoolExecutor(max_workers=concurrent)
-    return [joiner, execute_num, init_cookie, executor]
+def init_param() -> list:
+    """
+    初始化参数, 读取shell命令参数, 自动登录
+    依次返回httpie_view方式, 线程池, 登录cookie
+    :rtype: list
+    """
+    parser = argparse.ArgumentParser(description="并发执行接口")
+    parser.add_argument("-w", "--workers", type=int, choices=choice_nums(1, 65, 1), default=1, help="并发执行线程数, 取值范围[1, 64]")
+    parser.add_argument("-l", "--loops", type=int, default=1, help="循环执行次数")
+    args = parser.parse_args()
+    loops = args.loops
+    if loops < 1:
+        loops = 1
+    print("参数设置结果: 执行次数=[{}], 并发线程数=[{}]".format(loops, args.workers))
+    init_executor = ThreadPoolExecutor(max_workers=args.workers)
+    cookie = auto_login()
+    return [loops, init_executor, cookie]
+
+
+def choice_nums(start: int, end: int, delta: int) -> list:
+    """
+    返回指定的数组序列
+    :rtype: list
+    """
+    return np.arange(start, end, delta).tolist()
 
 
 def execute_http(i):
@@ -101,20 +105,18 @@ def handle_json_str_value(json):
 
 
 def main():
-    # 初始化参数
-    initial_param_list = init_param()
     # 全局变量
-    global joiner
     global execute_num
     global init_cookie
     global executor
-    joiner = initial_param_list[0]
-    execute_num = initial_param_list[1]
+    # 初始化参数
+    initial_param_list = init_param()
+    execute_num = initial_param_list[0]
+    executor = initial_param_list[1]
     init_cookie = initial_param_list[2]
-    executor = initial_param_list[3]
     nums = list(range(0, execute_num))
-    for result in executor.map(execute_http, nums):
-        print(result)
+    # for result in executor.map(execute_http, nums):
+    #     print(result)
 
 
 if __name__ == '__main__':

@@ -4,48 +4,50 @@ import datetime
 import json
 import ssl
 import unicodedata
-import sys
-import time
 from concurrent.futures.thread import ThreadPoolExecutor
 
 import pandas as pd
+import numpy as np
 import requests
+import argparse
 
 # 屏蔽HTTPS证书校验, 忽略安全警告
 requests.packages.urllib3.disable_warnings()
 context = ssl._create_unverified_context()
-joiner = ' '
-cmd = "http"
-no_ca = "--verify=no"
-httpie_allow_view = {"-v": "显示请求详细信息", "-h": "显示请求头", "-b": "显示请求Body", "-d": "响应结果保存至TXT", "": "默认"}
-httpie_view = None
-# 最大并发数
-max_concurrent = 64
-concurrent = 1
-try:
-    if len(sys.argv) > 1:
-        if httpie_allow_view.get(sys.argv[1]) is not None:
-            httpie_view = sys.argv[1]
-        else:
-            print("输入参数有误, 仅支持如下参数: -v显示请求详细信息|-h显示请求头|-b显示请求Body|-d响应结果保存至TXT")
-    if len(sys.argv) > 2:
-        try:
-            input_concurrent = int(sys.argv[2])
-            if input_concurrent > 1:
-                concurrent = min(input_concurrent, max_concurrent)
-        except Exception as e:
-            print("并发数设置范围[1, {}], 默认1".format(max_concurrent))
-            print(e)
-except Exception as e:
-    print(e)
-executor = ThreadPoolExecutor(max_workers=concurrent)
 
 
-def httpie_cmd(id):
+def init_param() -> list:
     """
-    执行excuteUrl.json接口
-    :param id
-    :return:
+    初始化参数, 读取shell命令参数, 自动登录
+    依次返回httpie_view方式, 线程池, 登录cookie
+    :rtype: list
+    """
+    parser = argparse.ArgumentParser(description="并发执行接口")
+    parser.add_argument("-w", "--workers", type=int, choices=choice_nums(1, 65, 1), default=1, help="并发执行线程数, 取值范围[1, 64]")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("-v", "--view", action="store_true", help="显示请求详细信息")
+    group.add_argument("-hd", "--header", action="store_true", help="显示请求头")
+    group.add_argument("-b", "--body", action="store_true", help="显示请求Body")
+    group.add_argument("-d", "--download", action="store_true", help="显示请求头, 但响应结果保存至TXT")
+    args = parser.parse_args()
+    view_param = "-v"
+    if args.header:
+        view_param = "-h"
+    if args.body:
+        view_param = "-b"
+    if args.download:
+        view_param = "-d"
+    print("参数设置结果: httpie命令方式=[{}], 并发线程数=[{}]".format(view_param, args.workers))
+    init_executor = ThreadPoolExecutor(max_workers=args.workers)
+    cookie = auto_login()
+    return [view_param, init_executor, cookie]
+
+
+def execute_http(id: int) -> str:
+    """
+    执行excuteUrl.json接口, 返回结果数据
+    :param id: 接口请求标识性ID数据
+    :rtype: str
     """
     with open("./excuteUrl.json", 'r') as request_data:
         request_json = json.load(request_data)
@@ -71,10 +73,19 @@ def httpie_cmd(id):
     return "执行命令httpie:\n{}\n当前ID=[{}], executeStartTime=[{}], executeEndTime=[{}]\n响应结果:\n{}".format(httpie_cmd_str, id, executeStartTime, executeEndTime, response_body)
 
 
-def httpie(url, method, request_headers, request_body):
-    param_list = [cmd, no_ca]
-    if httpie_view is not None:
-        param_list.append(httpie_view)
+def httpie(url: str, method: str, request_headers: json, request_body: json) -> str:
+    """
+    拼接httpie完整命令
+    :param url: 接口访问路径
+    :param method: 请求方式
+    :param request_headers: 请求头JSON
+    :param request_body: 请求Body体JSON
+    :rtype: str
+    """
+    joiner = ' '
+    cmd = "http"
+    no_ca = "--verify=no"
+    param_list = [cmd, no_ca, httpie_view]
     param_list.extend([method, url])
     for (k, v) in request_headers.items():
         if k == "Cookie":
@@ -89,9 +100,12 @@ def httpie(url, method, request_headers, request_body):
     return joiner.join(param_list)
 
 
-def is_number(s):
+def is_number(s: str) -> bool:
+    """
+    :param s: 输入字符串
+    :rtype: bool
+    """
     try:
-        # 如果能运行float(s)语句，返回True（字符串s是浮点数）
         float(s)
         return True
     except ValueError:
@@ -107,19 +121,20 @@ def is_number(s):
     return False
 
 
-def load_data():
+def load_data() -> list:
     """
     读取数据文件, 每行为一条数据
-    :return:
+    :rtype: list
     """
     data = pd.read_csv("./ID.csv", header=-1)
     data.columns = ['id']
     return data['id']
 
 
-def auto_login():
+def auto_login() -> str:
     """
     自动登录, 获取登录Cookie
+    :rtype: str
     """
     with open("./ssoLogin.json", 'r') as sso_login_request_data:
         request_json = json.load(sso_login_request_data)
@@ -139,22 +154,23 @@ def auto_login():
     return cookie
 
 
-def handle_json_str_value(json):
+def handle_json_str_value(json: json) -> json:
     """
     将json的值都变为字符串处理
     :param json:
-    :return:
+    :rtype: json
     """
     for (k, v) in json.items():
         json[k] = str(v)
     return json
 
 
-def replace_id(json, id):
+def replace_id(json: json, id: int) -> json:
     """
     将json的值都变为字符串处理
     :param json:
-    :return:
+    :param id: 目标ID
+    :rtype: json
     """
     for (k, v) in json.items():
         if v == "NONE":
@@ -164,14 +180,27 @@ def replace_id(json, id):
     return json
 
 
+def choice_nums(start: int, end: int, delta: int) -> list:
+    """
+    返回指定的数组序列
+    :rtype: list
+    """
+    return np.arange(start, end, delta).tolist()
+
+
 def main():
-    # 全局变量cookie, 初始化为空
+    # 全局变量
+    global httpie_view
+    global executor
     global init_cookie
-    # 首先登陆一次
-    init_cookie = auto_login()
+    # 首先初始化数据
+    init = init_param()
+    httpie_view = init[0]
+    executor = init[1]
+    init_cookie = init[2]
     # 读取ID数据列表
     ids = load_data()
-    for result in executor.map(httpie_cmd, ids):
+    for result in executor.map(execute_http, ids):
         print(result)
 
 
