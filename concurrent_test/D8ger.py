@@ -8,7 +8,7 @@ import requests
 
 
 def main():
-    parser = argparse.ArgumentParser(description="并发执行接口")
+    parser = argparse.ArgumentParser(description="帝八嫂的小秘密")
     parser.add_argument("-l", "--loop", type=int, default=20, help="下载次数默认20")
     parser.add_argument("-d", "--delay", type=int, default=5, help="延时默认5秒")
     args = parser.parse_args()
