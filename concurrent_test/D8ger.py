@@ -5,6 +5,31 @@ import random
 import time
 
 import requests
+import logging
+
+
+def build_logs():
+    # 设置log名称
+    log_name = "v5.log"
+    # 定义logger
+    logger = logging.getLogger()
+    # 设置级别为debug
+    logger.setLevel(level=logging.DEBUG)
+    # 设置 logging文件名称
+    handler = logging.FileHandler(log_name)
+    # 设置级别为debug
+    handler.setLevel(logging.DEBUG)
+    # 设置log的格式
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    # 将格式压进logger
+    handler.setFormatter(formatter)
+    console = logging.StreamHandler()
+    console.setLevel(logging.DEBUG)
+    # 写入logger
+    logger.addHandler(handler)
+    logger.addHandler(console)
+    # 将logger返回
+    return logger
 
 
 def main():
@@ -18,7 +43,9 @@ def main():
     delay = args.delay
     if delay < 0:
         delay = 5
-    print("参数设置结果: 下载次数=[{}], 延时=[{}]s".format(loop, delay))
+    # 日志
+    logger = build_logs()
+    logger.debug("参数设置结果: 下载次数=[{}], 延时=[{}]s".format(loop, delay))
     tasks = list(range(1, loop + 1))
     download_url = "https://plugins.jetbrains.com/plugin/download?rel=true&updateId=92649"
     # 添加头部，伪装浏览器，字典格式
@@ -27,7 +54,7 @@ def main():
     headers_2 = {'User-Agent': 'Mozilla/5.0 (iPad; U; CPU OS 4_2_1 like Mac OS X; zh-cn) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5'}
     failed = 0
     for i in tasks:
-        print("执行第[{}]次下载任务".format(i))
+        logger.debug("执行第[{}]次下载任务".format(i))
         # 随机获取浏览器代理
         seed = random.randint(0, 500)
         mod = seed % 3
@@ -36,21 +63,23 @@ def main():
             headers = headers_1
         if mod == 2:
             headers = headers_2
+        file_name = "D8{}.zip".format(i)
         try:
+            logger.debug("第[{}]次下载任务选取浏览器代理[{}]".format(i, headers))
             jet = requests.get(download_url, headers=headers)
-            file_name = "D8{}.zip".format(i)
             # 下载文件
             with open(file_name, "wb") as d8ger_writer:
                 d8ger_writer.write(jet.content)
         except Exception as e:
             # 服务端关闭连接, 防火墙超时关闭连接, 或其他异常
-            print("第[{}]次下载任务出现异常, 原因: {}".format(i, e))
+            logger.error("第[{}]次下载任务出现异常, 原因: {}".format(i, e))
             failed += 1
             # 继续下一次
             continue
         # 延时5秒执行
+        logger.debug("文件[{}]下载完成".format(file_name))
         time.sleep(delay)
-    print("失败[{}]次, 成功下载[{}]次", failed, loop - failed)
+    logger.debug("失败[{}]次, 成功下载[{}]次".format(failed, loop - failed))
 
 
 if __name__ == '__main__':
