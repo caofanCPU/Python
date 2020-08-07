@@ -35,15 +35,17 @@ def main():
             headers = headers_1
         if mod == 2:
             headers = headers_2
-
-        jet = requests.get(download_url, headers=headers)
-
-        file_name = "D8{}.zip".format(i)
-
-        # 下载文件
-        with open(file_name, "wb") as d8ger_writer:
-            d8ger_writer.write(jet.content)
-
+        try:
+            jet = requests.get(download_url, headers=headers)
+            file_name = "D8{}.zip".format(i)
+            # 下载文件
+            with open(file_name, "wb") as d8ger_writer:
+                d8ger_writer.write(jet.content)
+        except Exception as e:
+            # 服务端关闭连接, 防火墙超时关闭连接, 或其他异常
+            print("第[{}]次下载任务出现异常, 原因: {}".format(i, e))
+            # 继续下一次
+            continue
         # 延时5秒执行
         time.sleep(delay)
 
