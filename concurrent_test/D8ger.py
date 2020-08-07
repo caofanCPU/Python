@@ -25,10 +25,11 @@ def main():
     headers_0 = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.103 Safari/537.36'}
     headers_1 = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'}
     headers_2 = {'User-Agent': 'Mozilla/5.0 (iPad; U; CPU OS 4_2_1 like Mac OS X; zh-cn) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5'}
+    failed = 0
     for i in tasks:
         print("执行第[{}]次下载任务".format(i))
         # 随机获取浏览器代理
-        seed = random.randint(0, 10000)
+        seed = random.randint(0, 500)
         mod = seed % 3
         headers = headers_0
         if mod == 1:
@@ -44,10 +45,12 @@ def main():
         except Exception as e:
             # 服务端关闭连接, 防火墙超时关闭连接, 或其他异常
             print("第[{}]次下载任务出现异常, 原因: {}".format(i, e))
+            failed += 1
             # 继续下一次
             continue
         # 延时5秒执行
         time.sleep(delay)
+    print("失败[{}]次, 成功下载[{}]次", failed, loop - failed)
 
 
 if __name__ == '__main__':
