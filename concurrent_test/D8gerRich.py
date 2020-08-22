@@ -74,9 +74,9 @@ def execute_download():
         # just log
         log.warning("you didn't set any parameters!")
     if loop > 64:
-        workers = 64
-    if workers < 0:
-        workers = 10
+        loop = 64
+    if loop < 0:
+        loop = 10
     if workers > 8:
         workers = 8
     if workers < 0:
