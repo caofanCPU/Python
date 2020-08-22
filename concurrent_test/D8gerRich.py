@@ -48,10 +48,6 @@ def copy_url(task_id: TaskID, url: str, path: str) -> None:
 
 def download(url: str, loop: int, workers: int, dest_dir: str):
     """Download multuple files to the given directory."""
-    if workers > 4:
-        workers = 4
-    if workers < 0:
-        workers = 2
     with progress:
         with ThreadPoolExecutor(max_workers=workers) as pool:
             for i in range(loop):
@@ -77,7 +73,15 @@ def execute_download():
     except Exception as e:
         # just log
         log.warning("you didn't set any parameters!")
-    console.print("parameter [bold magenta]loop[/bold magenta] = [bold green]10[/bold green], parameter [bold magenta]workers[/bold magenta] = [bold green]2[/bold green]")
+    if loop > 64:
+        workers = 64
+    if workers < 0:
+        workers = 10
+    if workers > 8:
+        workers = 8
+    if workers < 0:
+        workers = 2
+    console.print("parameter [bold magenta]loop[/bold magenta] = [bold green]{}[/bold green], parameter [bold magenta]workers[/bold magenta] = [bold green]{}[/bold green]".format(loop, workers))
     download(url, loop, workers, "./")
 
 
