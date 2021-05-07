@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import argparse
 import datetime
-import json
 import ssl
 from concurrent.futures.thread import ThreadPoolExecutor
 
-import requests
-
 import numpy as np
-import argparse
+import requests
 
 # 屏蔽HTTPS证书校验, 忽略安全警告
 requests.packages.urllib3.disable_warnings()
